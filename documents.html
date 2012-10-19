@@ -1,0 +1,95 @@
+c<! DOCTYPE html>
+<html lang="en">
+	<head>
+		<title></title>
+		<style type="text/css"></style>
+		<script type="text/javascript" src="lib/jQuery-1.8.2.js"></script>
+		<script type="text/javascript" src="lib/handlebars-1.0.rc.1.js"></script>
+		<script type="text/javascript" src="lib/underscore-min.js"></script>
+		<script type="text/javascript" src="lib/backbone-min.js"></script>
+	</head>
+	<body>
+		<script type="text/javascript">
+				
+				var documents = [
+					new Backbone.Model({
+						title : "Javascript",
+						content : "The language that rules the entire WWW"
+					}),
+					new Backbone.Model({
+						title : "Scala",
+						content : "A hybrid programming language"
+					}),
+					new Backbone.Model({
+						title : "C#",
+						content : "An object oriented programming language from MS"
+					})
+				];
+
+				var eventAggregator = _.extend({}, Backbone.Events);
+
+				var DocumentListView = Backbone.View.extend({
+					tagName : "li",
+					events : {
+						"click" : function () {
+							eventAggregator.trigger("document:selected", this.model);
+						}
+					},
+					render : function () {
+						this.$el.html(this.model.get("title"));
+						return this;
+					}
+				});
+
+				var DocumentView = Backbone.View.extend({
+					render : function () {
+						this.$el.append(this.make('h1', null, this.model.get('title')));
+						this.$el.append(this.make('p', null, this.model.get('content')));
+						return this;
+					}
+				});
+
+				var ContentsView = Backbone.View.extend({
+					tagName : "ul",
+					render : function () {
+						_(this.collection).each(function (document){
+							this.$el.append(new DocumentListView({model : document}).render().el);
+						}, this);
+						return this;
+					}
+				});
+
+				eventAggregator.on("document:selected", function(document){
+					var urlPath = "view/" + document.get('title');
+					documentRouter.navigate(urlPath, {trigger : true});
+				});
+
+				var DocumentRouter = Backbone.Router.extend({
+					routes : {
+						"contents" : "contents",
+						"view/:title" : "viewDocument"
+					},
+
+					contents : function () {
+						$('body').html(new ContentsView({collection : documents}).render().el);
+					},
+
+					viewDocument : function (title) {
+						var selectedDocument = _(documents).find(function(document){
+							return document.get("title") === title;
+						});
+
+						$('body').empty().append(new DocumentView({
+							model : selectedDocument
+						}).render().el);
+					}
+				});
+
+				var documentRouter = new DocumentRouter();
+				Backbone.history.start();
+
+				documentRouter.navigate('contents', {trigger : true});
+
+		</script>
+	</body>
+</html>
