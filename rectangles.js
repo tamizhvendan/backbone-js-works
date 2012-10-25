@@ -2,12 +2,19 @@ var app = {};
 
 (function (shapes) {
 
-	app.Rectangle = Backbone.Model.extend({
+	shapes.Rectangle = Backbone.Model.extend({
 		initialize : function () {
 			this.on('change', function(){
 				if (this.get('length') <= 0 || this.get('width') <= 0) 
 					throw new Error('Invalid Dimesions!')
 			}, this);
+		},
+
+		defaults : {
+			position : {
+				x : 0,
+				y : 0
+			}
 		},
 		area : function () {
 			return this.get("length") * this.get("width");
@@ -22,7 +29,7 @@ var app = {};
 		}
 	});
 
-	var RectangleView = Backbone.View.extend({
+	shapes.RectangleView = Backbone.View.extend({
 
 		tagName : 'div',
 
@@ -65,7 +72,7 @@ var app = {};
 	});
 
 	var models = [
-		new app.Rectangle({
+		new shapes.Rectangle({
 			width : 100,
 			height : 60,
 			position : {
@@ -74,7 +81,7 @@ var app = {};
 			},
 			color : 'blue'
 		}),
-		new app.Rectangle({
+		new shapes.Rectangle({
 			width : 100,
 			height : 100,
 			position : {
@@ -83,7 +90,7 @@ var app = {};
 			},
 			color : 'red'
 		}),
-		new app.Rectangle({
+		new shapes.Rectangle({
 			width : 150,
 			height : 60,
 			position : {
@@ -95,7 +102,7 @@ var app = {};
 	];
 
 	_(models).each(function (model){
-		$("div#canvas").append(new RectangleView({ model : model }).render().el);	
+		$("div#canvas").append(new shapes.RectangleView({ model : model }).render().el);	
 	});
 
 })(app);

@@ -84,3 +84,31 @@ describe('Rectangle', function () {
 		})
 	})
 })
+
+describe('Rectangle View', function (){
+	var rectangleView;
+
+	describe('with length 70 and width 40', function (){
+		
+		beforeEach(function (){
+			var rectangle = new app.Rectangle({
+				length : 70,
+				width : 40
+			});
+
+			rectangleView = new app.RectangleView({
+				model : rectangle
+			});
+
+			rectangleView.render();
+		});
+
+		it('should render a div', function (){
+			expect(rectangleView.el.tagName).toBe('DIV');
+		});
+
+		it('should render with the class name rectangle', function (){
+			expect(rectangleView.$el.hasClass('rectangle')).toBe(true);
+		});		
+	})
+})
