@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head> 
+		<title>Getting Started with Backbone.marionette.js</title>
+		<link rel="stylesheet" type="text/css" href="styles.css">
+		<script type="text/javascript" src="../lib/jQuery-1.8.2.js"></script>
+		<script type="text/javascript" src="../lib/handlebars-1.0.rc.1.js"></script>
+		<script type="text/javascript" src="../lib/underscore-min.js"></script>
+		<script type="text/javascript" src="../lib/backbone-min.js"></script>
+		<script type="text/javascript" src="../lib/backbone.marionette.js"></script>
+		<script type="text/javascript" src="app.js"></script>
+	</head>
+	<body style="clear:both;margin:10px">
+		<div id="content">
+			<script type="text/template" id="cats-template">
+				<thead>
+					<tr class='header'>
+						<th>Rank</th>
+						<th># Votes</th>
+						<th>Name</th>
+						<th></th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</script>
+			<script type="text/template" id="cat-template">
+				<td><%= rank %></td>
+				<td><%= votes %></td>
+				<td><%= name %></td>
+				<td>
+					<div class="rank_up"><span id="rank_up">Rank Up </span></div>
+					<div class="rank_down"><span id="rank_down">Rank Down </span></div>
+				</td>
+				<td><a href="#" class="disqualify">disqualify</a></td>
+			</script>
+		</div>
+		<script>
+			
+		</script>
+	</body>
+</html>
